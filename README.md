@@ -1,16 +1,73 @@
 # recipes_web
 
-A new Flutter project.
+Front end application for Recipes/Cookbook platform.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- stuff
+- more stuff
+- other stuff
 
-A few resources to get you started if this is your first Flutter project:
+## Download
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Dev Info
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Project Structure
+
+recipes_web
+├── android                                       // Android-specific files
+│   ├── app  
+│   ├── gradle  
+│   ├── .gitignore  
+│   ├── build.gradle  
+│   ├── gradle.properties  
+│   └── settings.gradle
+├── assets                                        // Android-specific files
+│   ├── fonts                                     // font files
+│   ├── icons                                     // svg icons
+│   ├── images                                    // image files  
+│   └── translations                              // i18n files
+├── ios                                           // iOS-specific files
+│   ├── Flutter  
+│   ├── Runner  
+│   ├── Runner.xcodeproj  
+│   ├── Runner.xcworkspace  
+│   └── .gitignore
+├── lib                                           // code
+│   ├── admin  
+│   │   ├── admin.controller.ts   
+│   ├── admin  
+│   │   ├── admin.controller.ts   
+│   │   ├── admin.module.ts  
+│   │   └── admin.service.ts  
+├── linux                                         // Linux-specific files
+│   ├── flutter  
+│   ├── .gitignore  
+│   ├── CMakeLists.txt  
+│   ├── main.cc  
+│   ├── my_application.cc  
+│   └── my_application.h
+├── macos                                         // MacOS-specific files
+│   ├── Flutter  
+│   ├── Runner  
+│   ├── Runner.xcodeproj  
+│   ├── Runner.xcworkspace  
+│   └── .gitignore  
+├── test                                          // Testing files
+│   └── manifest.json  
+├── web                                           // Web-specific files
+│   ├── icons  
+│   ├── favicon.png  
+│   ├── index.html  
+│   └── manifest.json  
+├── windows                                       // Windows-specific files
+│   ├── flutter  
+│   ├── runner  
+│   ├── .gitignore  
+│   └── CMakeLists.txt  
+├── .gitignore                                    // Windows-specific files
+├── .metadata                                     // Windows-specific files
+├── analysis_options.yaml                         // Windows-specific files
+├── pubspec.lock                                    // Windows-specific files
+├── pubspec.yaml                                    // Windows-specific files
+└── README.md                                    // Windows-specific files
