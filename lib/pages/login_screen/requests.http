@@ -1,0 +1,27 @@
+### Sign in as existing user
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "username": "dad@dad.com",
+  "password": "Asdf123!",
+  "platform": "web"
+}
+
+### Create new user
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "username": "dad@dad.com",
+  "password": "Asdf123!"
+}
+
+### Confirm email address
+POST http://localhost:3000/auth/confirmemail
+Content-Type: application/json
+
+{
+  "username": "dad@dad.com",
+  "token": "adminstring"
+}
