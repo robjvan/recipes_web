@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -9,16 +7,16 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final double _sw = MediaQuery.of(context).size.width;
+    final double sw = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(color: Theme.of(context).splashColor),
-        width: _sw,
+        width: sw,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Text(
               'Hello from LoginScreen',
               style: TextStyle(
@@ -27,12 +25,14 @@ class LoginScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             ElevatedButton(
-              child: Text('Login'),
+              child: const Text('Login'),
               onPressed: () {
                 Navigator.pushReplacementNamed(
-                    context, DashboardScreen.routeName);
+                  context,
+                  DashboardScreen.routeName,
+                );
               },
             ),
           ],

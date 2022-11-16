@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipes_web/widgets/navigation_drawer/navigation_drawer.dart';
+import 'package:recipes_web/widgets/navigation_drawer/navigation.drawer.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
