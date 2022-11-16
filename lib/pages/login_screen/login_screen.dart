@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipes_web/controllers/auth.controller.dart';
-import 'package:recipes_web/controllers/user.data.controller.dart';
-import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
+import 'package:recipes_web/api/recipes_api.dart';
+import 'package:recipes_web/config/config.dart';
+import 'package:recipes_web/controllers/api_state.controller.dart';
+import 'package:recipes_web/models/dto/sign_in.dto.dart';
+import 'package:recipes_web/providers/recipes_api_provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -13,8 +15,9 @@ class LoginScreen extends StatelessWidget {
   Widget build(final BuildContext context) {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+    final RecipesAPI recipesAPI = RecipesAPI(RecipesAPIProvider());
     final double sw = MediaQuery.of(context).size.width;
-    final AuthController authController = Get.put(AuthController());
+    final ApiStateController apiState = Get.put(ApiStateController());
 
     return Scaffold(
       body: Container(
@@ -33,56 +36,56 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            Form(
-              key: formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    TextFormField(
-                      controller: usernameController,
-                      validator: (final String? value) {
-                        if (value!.isEmpty) {
-                          return 'Username cannot be empty';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(),
+            Obx(
+              () => apiState.isLoading.value
+                  ? const CircularProgressIndicator() // TODO(Rob): Add some style
+                  : Form(
+                      key: formKey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            TextFormField(
+                              controller: usernameController,
+                              validator: (final String? value) {
+                                if (value!.isEmpty) {
+                                  return 'Username cannot be empty';
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: const InputDecoration(),
+                            ),
+                            TextFormField(
+                              controller: passwordController,
+                              validator: (final String? value) {
+                                if (value!.isEmpty) {
+                                  return 'Password cannot be empty';
+                                }
+                                return null;
+                              },
+                              obscureText: true,
+                              decoration: const InputDecoration(),
+                            ),
+                            ElevatedButton(
+                              child: const Text('Login'),
+                              onPressed: () async {
+                                if (formKey.currentState!.validate()) {
+                                  await recipesAPI.signIn(
+                                    signInCredentials: SignInDto(
+                                      username: usernameController.text,
+                                      password: passwordController.text,
+                                      platform: await Config().getPlatform(),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    TextFormField(
-                      controller: passwordController,
-                      validator: (final String? value) {
-                        if (value!.isEmpty) {
-                          return 'Password cannot be empty';
-                        }
-                        return null;
-                      },
-                      obscureText: true,
-                      decoration: const InputDecoration(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            ElevatedButton(
-              child: const Text('Login'),
-              onPressed: () {
-                /// 1. Ensure form data is valid
-                if (formKey.currentState!.validate()) {
-                  /// 2. Send user credentials to API
-                  
-                  
-                  /// 3. If response = OK, store token in Get store
-                  authController.saveToken(authToken)
-                  /// 4. Navigate to Dashboard
-                  Navigator.pushReplacementNamed(
-                    context,
-                    DashboardScreen.routeName,
-                  );
-                }
-              },
             ),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:platform_plus/platform_plus.dart';
 import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
 
 // import 'package:recipes_web/pages/home_screen.dart';
@@ -26,7 +28,11 @@ Future<bool> isRooted() async {
   return isRooted;
 }
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PlatformPlus.platform.init();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -34,15 +40,17 @@ class MyApp extends StatelessWidget {
   @override
   // ignore: prefer_expression_function_bodies
   Widget build(final BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'App Title',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-
+      debugShowCheckedModeBanner: false,
       // initialRoute: LoadingScreen.routeName, //TODO: Add load logic
       initialRoute: LoginScreen.routeName,
+      
+      // getPages: getPages,
       routes: <String, WidgetBuilder>{
         DashboardScreen.routeName: (final BuildContext ctx) =>
             const DashboardScreen(),

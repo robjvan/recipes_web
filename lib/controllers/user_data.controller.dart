@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:recipes_web/models/recipe.model.dart';
 
 class UserDataController extends GetxController {
+  // TODO: Download DB to local list for on-device processing
+  // TODO: When an action is taken, update both the local lsit and backend DB
+  
   final RxList<Recipe> _userRecipes = <Recipe>[].obs;
   List<Recipe> get userRecipes => _userRecipes;
 
