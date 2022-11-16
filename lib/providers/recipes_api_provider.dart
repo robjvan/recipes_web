@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:recipes_web/config/config.dart' as config;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:recipes_web/config/config.dart' as config;
 import 'package:recipes_web/models/dto/sign_in.dto.dart';
 
 @immutable
