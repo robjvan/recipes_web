@@ -153,13 +153,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  flutter_redux:
-    dependency: "direct main"
-    description:
-      name: flutter_redux
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.0"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -184,6 +177,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.6.5"
   http:
     dependency: "direct main"
     description:
@@ -363,13 +363,6 @@ packages:
     dependency: "direct main"
     description:
       name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.0"
-  redux:
-    dependency: "direct main"
-    description:
-      name: redux
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"
