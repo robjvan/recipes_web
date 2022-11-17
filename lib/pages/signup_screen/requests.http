@@ -1,0 +1,8 @@
+### Check if username already exists in DB
+POST http://localhost:3000/auth/checkusername
+Content-Type: application/json
+
+{
+  "username": "dad2@dad.com"
+}
+
