@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:recipes_web/api/auth_api.dart';
 import 'package:recipes_web/config/config.dart';
 import 'package:recipes_web/controllers/api_state.controller.dart';
-import 'package:recipes_web/models/dto/sign_in.dto.dart';
+import 'package:recipes_web/pages/login_screen/dto/sign_in.dto.dart';
+import 'package:recipes_web/pages/signup_screen/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -17,7 +18,7 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: Colors.blue[50]),
+        decoration: const BoxDecoration(color: Colors.white),
         width: sw,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -81,13 +82,23 @@ class LoginScreen extends StatelessWidget {
               obscureText: true,
               decoration: const InputDecoration(),
             ),
+            const SizedBox(height: 32),
             /// Login button
             ElevatedButton(
-              child: const Text('Login'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(200, 60),
+                maximumSize: const Size(200, 60),
+              ),
+              child: const Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
               onPressed: () async {
                 if (formKey.currentState!.validate()) {
                   await authAPI.signIn(
-                    signInCredentials: SignInDto(
+                    SignInDto(
                       username: usernameController.text,
                       password: passwordController.text,
                       platform: await Config().getPlatform(),
@@ -95,6 +106,17 @@ class LoginScreen extends StatelessWidget {
                   );
                 }
               },
+            ),
+            const SizedBox(height: 8),
+
+            /// Sign up button
+            TextButton(
+              onPressed: () => Get.off(() => SignupScreen()),
+              style: TextButton.styleFrom(
+                minimumSize: const Size(200, 40),
+                maximumSize: const Size(200, 40),
+              ),
+              child: const Text('Register'),
             ),
           ],
         ),

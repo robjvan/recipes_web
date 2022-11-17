@@ -9,7 +9,7 @@ class DashboardScreen extends StatelessWidget {
   static String routeName = '/dashboard';
   @override
   Widget build(final BuildContext context) {
-    final AuthController authController = Get.find();
+    final AuthController authController = Get.put(AuthController());
 
     return Scaffold(
         appBar: AppBar(
