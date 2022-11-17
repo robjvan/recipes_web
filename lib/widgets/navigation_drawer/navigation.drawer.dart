@@ -47,6 +47,6 @@ class NavigationDrawer extends Drawer {
 }
 
 Widget buildLogoutButton(final BuildContext context) => TextButton(
-      onPressed: () => Get.off(LoginScreen.new),
+      onPressed: () => Get.offAll(LoginScreen.new),
       child: const Text('Logout'),
     );
