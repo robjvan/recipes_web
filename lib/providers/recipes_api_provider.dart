@@ -7,8 +7,8 @@ import 'package:recipes_web/models/dto/sign_in.dto.dart';
 
 @immutable
 class RecipesAPIProvider {
-  final String _apiUrl = 'api/v1';
-  final String _authUrl = 'auth';
+  final String _apiUrl = '/api/v1';
+  final String _authUrl = '/auth';
 
   Future<http.Response> signIn(final SignInDto signInCredentials) {
     // build request using sign in credentials, send off to API

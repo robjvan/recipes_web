@@ -1,7 +1,7 @@
 // Uri _weatherApiUrl = Uri.parse('http://api.yourcookbook.ca/');
 import 'package:platform_plus/platform_plus.dart';
 
-Uri _recipesApiUrl = Uri.parse('http://10.0.0.144:3000/');
+Uri _recipesApiUrl = Uri.parse('http://10.0.0.144:3000');
 // Uri _recipesApiUrl = Uri.parse('http://localhost:3000/');
 
 class Config {
