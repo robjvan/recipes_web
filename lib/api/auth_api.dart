@@ -3,28 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:recipes_web/api/providers/auth_api_provider.dart';
 import 'package:recipes_web/controllers/api_state.controller.dart';
 import 'package:recipes_web/controllers/auth.controller.dart';
 import 'package:recipes_web/models/access_token.dart';
 import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
 import 'package:recipes_web/pages/login_screen/dto/sign_in.dto.dart';
 import 'package:recipes_web/pages/signup_screen/dto/sign-up.dto.dart';
-import 'package:recipes_web/providers/auth_api_provider.dart';
+import 'package:recipes_web/widgets/custom_dialogs.dart';
 
 class AuthAPI {
   final AuthAPIProvider _authAPIProvider = AuthAPIProvider();
   final AuthController _authController = Get.put(AuthController());
   final ApiStateController _apiState = Get.put(ApiStateController());
-
-  /// Builder for generic error dialog, used with API responses
-  // ignore: prefer_expression_function_bodies
-  Future<void> _buildErrorDialog(final String message) {
-    return Get.defaultDialog(
-        title: 'Error',
-        content: Text(message),
-        // TODO(Rob): Add some styling to the error dialog
-      );
-  } 
 
   /// Sign in an existing user
   Future<void> signIn(final SignInDto signInCredentials) async {
@@ -34,29 +25,36 @@ class AuthAPI {
     try {
       response = await _authAPIProvider.signIn(signInCredentials);
 
-      if (response.statusCode == 201) {
-        final AuthToken json = AuthToken.fromJson(jsonDecode(response.body));
+      switch (response.statusCode) {
+        case 201:
+          final AuthToken json = AuthToken.fromJson(jsonDecode(response.body));
 
-        // Parse and store authToken
-        final String parsedToken = json.token;
-        _authController.saveToken(parsedToken);
+          // Parse and store authToken
+          final String parsedToken = json.token;
+          _authController.saveToken(parsedToken);
 
-        /// Navigate to Dashboard
-        await Get.off(DashboardScreen.new);
-      } else if (response.statusCode == 404) {
-        await _buildErrorDialog(
-          'Could not connect to server, please try again later',
-        );
-      } else if (response.statusCode == 500) {
-        await _buildErrorDialog('Server error, please try again later');
-      } else if (response.statusCode == 400 || response.statusCode == 401) {
-        await _buildErrorDialog(
-          'Invalid username or password, please try again',
-        );
+          /// Navigate to Dashboard
+          await Get.off(DashboardScreen.new);
+          break;
+        case 400:
+        case 401:
+          await CustomDialogs().buildErrorDialog(
+            'Invalid username or password, please try again',
+          );
+          break;
+        case 404:
+          await CustomDialogs().buildErrorDialog(
+            'Could not connect to server, please try again later',
+          );
+          break;
+        case 500:
+          await CustomDialogs()
+              .buildErrorDialog('Server error, please try again later');
+          break;
       }
       _apiState.setLoadingState(false);
     } on Exception catch (err) {
-      await _buildErrorDialog(
+      await CustomDialogs().buildErrorDialog(
         'Could not connect to server, please try again later',
       );
       debugPrint(err.toString());
@@ -70,5 +68,39 @@ class AuthAPI {
     // late http.Response response;
 
     // TODO(Rob): Finish Signup method
+  }
+
+  /// Check if username already exists in the DB
+  Future<bool> checkUsername(final String username) async {
+    _apiState.setLoadingState(true);
+    http.Response response;
+
+    try {
+      response = await _authAPIProvider.checkUsername(username);
+      switch (response.statusCode) {
+        case 200:
+        case 201:
+          if (response.body == 'true') {
+            return true;
+          } else {
+            return false;
+          }
+        case 400:
+        case 401:
+          break;
+        case 404:
+          await CustomDialogs().buildErrorDialog(
+            'Could not connect to server, please try again later',
+          );
+          break;
+        case 500:
+          await CustomDialogs()
+              .buildErrorDialog('Server error, please try again later');
+          break;
+      }
+    } on Exception catch (err) {
+      debugPrint(err.toString());
+    }
+    return false;
   }
 }
