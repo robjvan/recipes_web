@@ -15,17 +15,20 @@ class NavigationRow extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) => TextButton(
-        onPressed: () => Navigator.pushReplacementNamed(
+        onPressed: () => Navigator.pushNamed(
           context,
           navRoute,
         ),
-        child: Row(
-          children: <Widget>[
-            Icon(iconData),
-            const SizedBox(width: 16),
-            Text(label),
-            const Spacer(),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            children: <Widget>[
+              Icon(iconData),
+              const SizedBox(width: 16),
+              Text(label),
+              const Spacer(),
+            ],
+          ),
         ),
       );
 }
