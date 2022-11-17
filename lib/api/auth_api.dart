@@ -6,22 +6,25 @@ import 'package:http/http.dart' as http;
 import 'package:recipes_web/controllers/api_state.controller.dart';
 import 'package:recipes_web/controllers/auth.controller.dart';
 import 'package:recipes_web/models/access_token.dart';
-import 'package:recipes_web/pages/login_screen/dto/sign_in.dto.dart';
 import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
+import 'package:recipes_web/pages/login_screen/dto/sign_in.dto.dart';
 import 'package:recipes_web/pages/signup_screen/dto/sign-up.dto.dart';
 import 'package:recipes_web/providers/auth_api_provider.dart';
-import 'package:recipes_web/providers/recipes_api_provider.dart';
 
 class AuthAPI {
   final AuthAPIProvider _authAPIProvider = AuthAPIProvider();
   final AuthController _authController = Get.put(AuthController());
   final ApiStateController _apiState = Get.put(ApiStateController());
 
-  Future<void> _buildErrorDialog(final String message) => Get.defaultDialog(
+  /// Builder for generic error dialog, used with API responses
+  // ignore: prefer_expression_function_bodies
+  Future<void> _buildErrorDialog(final String message) {
+    return Get.defaultDialog(
         title: 'Error',
         content: Text(message),
         // TODO(Rob): Add some styling to the error dialog
       );
+  } 
 
   /// Sign in an existing user
   Future<void> signIn(final SignInDto signInCredentials) async {
@@ -61,10 +64,11 @@ class AuthAPI {
     }
   }
 
+  /// Sign up as a new user
   Future<dynamic> signUp(final SignUpDto signupCredentials) async {
     _apiState.setLoadingState(true);
-    late http.Response response;
+    // late http.Response response;
 
-    
+    // TODO(Rob): Finish Signup method
   }
 }
