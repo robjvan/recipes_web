@@ -15,15 +15,16 @@ class AuthAPI {
   final AuthController authController = Get.put(AuthController());
   final ApiStateController apiState = Get.put(ApiStateController());
 
-  Future<Widget> _buildErrorDialog(final String message) async =>
-      await Get.defaultDialog(
+  Future<void> _buildErrorDialog(final String message) => Get.defaultDialog(
         title: 'Error',
         content: Text(message),
         // TODO(Rob): Add some styling to the error dialog
       );
 
   /// Sign in an existing user
-  Future<void> signIn({required final SignInDto signInCredentials}) async {
+  Future<void> signIn(
+      {required final SignInDto signInCredentials,
+      required final BuildContext context}) async {
     apiState.setLoadingState(true);
     late http.Response response;
 
@@ -40,44 +41,22 @@ class AuthAPI {
         /// Navigate to Dashboard
         await Get.off(const DashboardScreen());
       } else if (response.statusCode == 404) {
-        // throw "Could not connect" message
         await _buildErrorDialog(
           'Could not connect to server, please try again later',
         );
-
-        // await Get.defaultDialog(
-        //   title: 'Error',
-        //   content:
-        //       const Text('Could not connect to server, please try again later'),
-        // );
-      } else if (response.statusCode == 500) {
-        // throw "Server error" message
+      } else if (response.statusCode == 500) {        
         await _buildErrorDialog('Server error, please try again later');
-        // await Get.defaultDialog(
-        //   title: 'Error',
-        //   content: const Text('Server error, please try again later'),
-        // );
       } else if (response.statusCode == 400 || response.statusCode == 401) {
-        // throw invalid credentials message
         await _buildErrorDialog(
           'Invalid username or password, please try again',
         );
-        // await Get.defaultDialog(
-        //   title: 'Error',
-        //   content: const Text('Invalid username or password, please try again'),
-        // );
       }
       apiState.setLoadingState(false);
     } on Exception catch (err) {
-      debugPrint(err.toString());
-      // throw "Could not connect" message
       await _buildErrorDialog(
         'Could not connect to server, please try again later',
       );
-      // await Get.defaultDialog(
-      //   title: 'Server Error',
-      //   content: const Text('Could not connect to server'),
-      // );
+      debugPrint(err.toString());
       apiState.setLoadingState(false);
     }
   }
