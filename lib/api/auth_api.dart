@@ -23,8 +23,7 @@ class AuthAPI {
 
   /// Sign in an existing user
   Future<void> signIn(
-      {required final SignInDto signInCredentials,
-      required final BuildContext context}) async {
+      {required final SignInDto signInCredentials}) async {
     apiState.setLoadingState(true);
     late http.Response response;
 
