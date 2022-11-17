@@ -15,7 +15,6 @@ class AuthAPIProvider {
 
   /// Sign in as an existing user
   Future<http.Response> signIn(final SignInDto signInCredentials) {
-    // build request using sign in credentials, send off to API
     final Uri signInUrl = config.getAPIUrl().resolve('$_authUrl/signin');
 
     return http.post(

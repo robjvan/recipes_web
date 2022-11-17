@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipes_web/controllers/auth.controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipes_web/config/config.dart' as config;
+import 'package:recipes_web/controllers/auth.controller.dart';
 import 'package:recipes_web/models/recipe.model.dart';
 
 //* The purpose of an API Provider is to handle the direct communication with the DB.
@@ -38,7 +38,7 @@ class RecipesAPIProvider {
   Future<http.Response> fetchAll() {
     /// 1. Retrieve authToken from Get storage
     final AuthController authController = Get.find();
-    final String authToken = authController.authToken;
+    final String token = authController.authToken;
 
     /// 2. Construct url
     final Uri fetchUrl = config.getAPIUrl().resolve('$_apiUrl/recipes');
@@ -47,7 +47,7 @@ class RecipesAPIProvider {
     return http.get(
       fetchUrl,
       headers: <String, String>{
-        'Bearer-Token': authToken,
+        'Authorization': 'Bearer $token',
       },
     );
   }
