@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
 import 'package:recipes_web/pages/login_screen/login_screen.dart';
 import 'package:recipes_web/pages/recipes_screen/recipes_screen.dart';
@@ -46,11 +47,6 @@ class NavigationDrawer extends Drawer {
 }
 
 Widget buildLogoutButton(final BuildContext context) => TextButton(
-      onPressed: () {
-        Navigator.pushReplacementNamed(
-          context,
-          LoginScreen.routeName,
-        );
-      },
+      onPressed: () => Get.off(LoginScreen.new),
       child: const Text('Logout'),
     );
