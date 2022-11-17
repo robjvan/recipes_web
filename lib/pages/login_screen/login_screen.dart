@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 32),
             Obx(
               () => apiState.isLoading.value
-                  ? _buildProgressIndicator()
+                  ? _buildLoadingIndicator()
                   : _buildLoginForm(),
             ),
           ],
@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressIndicator() => const CircularProgressIndicator(
+  Widget _buildLoadingIndicator() => const CircularProgressIndicator(
       // TODO(Rob): Add some styling to the indicator
       );
 }
