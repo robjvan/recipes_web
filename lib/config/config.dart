@@ -1,5 +1,5 @@
 // Uri _weatherApiUrl = Uri.parse('http://api.yourcookbook.ca/');
-import 'package:platform_plus/platform_plus.dart';
+import 'package:get/get.dart';
 
 Uri _recipesApiUrl = Uri.parse('http://10.0.0.144:3000');
 // Uri _recipesApiUrl = Uri.parse('http://localhost:3000/');
@@ -22,20 +22,20 @@ class Config {
 
   /// Returns the platform currently in use (web, ios, android, windows, linux, or macos)
   Future<String> getPlatform() async {
-    final PlatformPlus userPlatform = PlatformPlus.platform;
-
-    if (userPlatform.isAndroidNative) {
+    if (GetPlatform.isWeb) {
+      return 'web';
+    } else if (GetPlatform.isAndroid) {
       return 'android';
-    } else if (userPlatform.isIOSNative) {
+    } else if (GetPlatform.isIOS) {
       return 'ios';
-    } else if (userPlatform.isLinuxNative) {
+    } else if (GetPlatform.isLinux) {
       return 'linux';
-    } else if (userPlatform.isWindowsNative) {
+    } else if (GetPlatform.isWindows) {
       return 'windows';
-    } else if (userPlatform.isMacOSNative) {
+    } else if (GetPlatform.isMacOS) {
       return 'macos';
     } else {
-      return 'web';
+      return 'unknown';
     }
   }
 }
