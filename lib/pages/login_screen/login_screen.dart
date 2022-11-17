@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final double sw = MediaQuery.of(context).size.width;
+    final double sw = Get.width;
     final ApiStateController apiState = Get.put(ApiStateController());
 
     return Scaffold(
@@ -111,7 +111,7 @@ class LoginScreen extends StatelessWidget {
 
             /// Sign up button
             TextButton(
-              onPressed: () => Get.off(() => SignupScreen()),
+              onPressed: () => Get.off(SignupScreen.new),
               style: TextButton.styleFrom(
                 minimumSize: const Size(200, 40),
                 maximumSize: const Size(200, 40),
