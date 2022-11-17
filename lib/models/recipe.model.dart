@@ -11,15 +11,15 @@ class Recipe {
     required this.userId,
   });
 
-  factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
-        id: json["id"],
-        title: json["title"],
-        userId: json["userId"],
+  factory Recipe.fromJson(final Map<String, dynamic> json) => Recipe(
+        id: json['id'],
+        title: json['title'],
+        userId: json['userId'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "userId": userId,
+        'id': id,
+        'title': title,
+        'userId': userId,
       };
 }
