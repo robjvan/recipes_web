@@ -38,7 +38,7 @@ class AuthAPI {
         authController.saveToken(parsedToken);
 
         /// Navigate to Dashboard
-        await Get.off(const DashboardScreen());
+        await Get.off(DashboardScreen.new);
       } else if (response.statusCode == 404) {
         await _buildErrorDialog(
           'Could not connect to server, please try again later',
