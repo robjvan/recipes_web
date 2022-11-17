@@ -10,14 +10,14 @@ class SettingsScreen extends StatelessWidget {
   Widget build(final BuildContext context) => Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
         ),
         drawer: const NavigationDrawer(),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              children: [
+              children: const <Widget>[
                 Text('Hello from SettingsScreen'),
               ],
             ),
