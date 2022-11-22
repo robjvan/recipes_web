@@ -62,14 +62,6 @@ class AuthAPI {
     }
   }
 
-  /// Sign up as a new user
-  Future<dynamic> signUp(final SignUpDto signupCredentials) async {
-    _apiState.setLoadingState(true);
-    // late http.Response response;
-
-    // TODO(Rob): Finish Signup method
-  }
-
   /// Check if username already exists in the DB
   Future<bool> checkUsername(final String username) async {
     _apiState.setLoadingState(true);
@@ -105,5 +97,25 @@ class AuthAPI {
       debugPrint(err.toString());
     }
     return false;
+  }
+
+  /// Sign up as a new user
+  Future<dynamic> signUp(final SignUpDto signupCredentials) async {
+    _apiState.setLoadingState(true);
+    // late http.Response response;
+
+    /// Check if username already exists in DB
+    bool userAlreadyExists = await checkUsername(signupCredentials.username);
+
+    if (userAlreadyExists) {
+      await Get.defaultDialog(
+        content: const Text(
+          'User account with that email address already exists',
+        ),
+      );
+    } else {
+      // TODO(Rob): Finish Signup method
+
+    }
   }
 }
