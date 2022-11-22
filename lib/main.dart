@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
 
 // import 'package:recipes_web/pages/loading_screen.dart';
@@ -28,6 +29,7 @@ Future<bool> isRooted() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -35,18 +37,19 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(final BuildContext context) => GetMaterialApp(
-        locale: const Locale('en', 'US'),
-        title: 'app-title'.tr,
-      translations: MyTranslations(), 
+  GetMaterialApp build(final BuildContext context) {
+    return GetMaterialApp(
+      locale: const Locale('en', 'US'),
+      title: 'app-title'.tr,
+      translations: MyTranslations(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-        // initialRoute: LoadingScreen.routeName, //TODO: Add load screen
+      // initialRoute: LoadingScreen.routeName, //TODO: Add load screen
       initialRoute: LoginScreen.routeName,
-        getPages: <GetPage<dynamic>>[
+      getPages: <GetPage<dynamic>>[
         GetPage<dynamic>(
           name: LoginScreen.routeName,
           page: () => const LoginScreen(),
@@ -67,10 +70,11 @@ class MyApp extends StatelessWidget {
           name: ShoppingListScreen.routeName,
           page: () => const ShoppingListScreen(),
         ),
-          GetPage<dynamic>(
-            name: RegisterScreen.routeName,
-            page: () => const RegisterScreen(),
-          ),
+        GetPage<dynamic>(
+          name: RegisterScreen.routeName,
+          page: () => const RegisterScreen(),
+        ),
       ],
-      );
+    );
+  }
 }

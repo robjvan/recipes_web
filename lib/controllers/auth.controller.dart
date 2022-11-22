@@ -1,14 +1,15 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AuthController extends GetxController {
-  final RxString _authToken = ''.obs;
-  String get authToken => _authToken.value;
+  final GetStorage box = GetStorage();
+  String get authToken => box.read('authToken') ?? '';
 
   void saveToken(final String authToken) {
-    _authToken.value = authToken;
+    box.write('authToken', authToken);
   }
 
   void wipeToken() {
-    _authToken.value = '';
+    box.write('authToken', '');
   }
 }

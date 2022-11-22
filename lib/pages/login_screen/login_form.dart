@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:recipes_web/api/auth_api.dart';
 import 'package:recipes_web/config/config.dart';
 import 'package:recipes_web/controllers/password_visibility.controller.dart';
@@ -22,7 +23,6 @@ class LoginForm extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            //* Username (email address) field
             _buildUsernameField(usernameController),
             _buildPasswordField(passwordController),
             const SizedBox(height: 32),
@@ -35,7 +35,7 @@ class LoginForm extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton(
+  ElevatedButton _buildLoginButton(
     final TextEditingController usernameController,
     final TextEditingController passwordController,
   ) {
@@ -65,7 +65,7 @@ class LoginForm extends StatelessWidget {
     );
   }
 
-  Widget _buildSignupButton() {
+  TextButton _buildSignupButton() {
     return TextButton(
       onPressed: () => Get.off(RegisterScreen.new),
       style: TextButton.styleFrom(
@@ -76,7 +76,12 @@ class LoginForm extends StatelessWidget {
     );
   }
 
-  Widget _buildUsernameField(final TextEditingController usernameController) {
+  TextFormField _buildUsernameField(
+    final TextEditingController usernameController,
+  ) {
+    final GetStorage settingsBox = GetStorage();
+    usernameController.text = settingsBox.read('lastUsername') ?? '';
+
     return TextFormField(
       controller: usernameController,
       validator: (final String? value) {
@@ -87,12 +92,14 @@ class LoginForm extends StatelessWidget {
         }
         return null;
       },
+      onChanged: (final String value) =>
+          settingsBox.write('lastUsername', value),
       keyboardType: TextInputType.emailAddress,
       decoration: const InputDecoration(),
     );
   }
 
-  Widget _buildPasswordField(final TextEditingController passwordController) {
+  Obx _buildPasswordField(final TextEditingController passwordController) {
     final PasswordVisibiltyController passwordVisibilty = Get.put(
       PasswordVisibiltyController(),
     );
