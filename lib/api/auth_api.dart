@@ -100,7 +100,8 @@ class AuthAPI {
       }
     } on Exception catch (err) {
       await CustomDialogs().buildErrorDialog(
-          'Could not connect to the server, please try again later.');
+        'Could not connect to the server, please try again later.',
+      );
       debugPrint(err.toString());
     }
     return false;
