@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipes_web/config/config.dart' as config;
 import 'package:recipes_web/pages/login_screen/dto/sign_in.dto.dart';
-import 'package:recipes_web/pages/signup_screen/dto/sign-up.dto.dart';
+import 'package:recipes_web/pages/register_screen/dto/sign-up.dto.dart';
 
 //* The purpose of an API Provider is to handle the direct communication with the DB.
 //* It passes requests and returns the raw response without any sort of processing

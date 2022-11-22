@@ -7,6 +7,7 @@ import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
 // import 'package:recipes_web/pages/loading_screen.dart';
 import 'package:recipes_web/pages/login_screen/login_screen.dart';
 import 'package:recipes_web/pages/recipes_screen/recipes_screen.dart';
+import 'package:recipes_web/pages/register_screen/register_screen.dart';
 import 'package:recipes_web/pages/settings_screen/settings_screen.dart';
 import 'package:recipes_web/pages/shoppinglist_screen/shoppinglist_screen.dart';
 import 'package:recipes_web/utils/localization/translations.dart';
@@ -66,6 +67,10 @@ class MyApp extends StatelessWidget {
           name: ShoppingListScreen.routeName,
           page: () => const ShoppingListScreen(),
         ),
+          GetPage<dynamic>(
+            name: RegisterScreen.routeName,
+            page: () => const RegisterScreen(),
+          ),
       ],
       );
 }

@@ -9,7 +9,7 @@ import 'package:recipes_web/controllers/auth.controller.dart';
 import 'package:recipes_web/models/access_token.dart';
 import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
 import 'package:recipes_web/pages/login_screen/dto/sign_in.dto.dart';
-import 'package:recipes_web/pages/signup_screen/dto/sign-up.dto.dart';
+import 'package:recipes_web/pages/register_screen/dto/sign-up.dto.dart';
 import 'package:recipes_web/widgets/custom_dialogs.dart';
 
 class AuthAPI {

@@ -5,12 +5,13 @@ import 'package:recipes_web/api/auth_api.dart';
 import 'package:recipes_web/config/config.dart';
 // import 'package:recipes_web/controllers/api_state.controller.dart';
 import 'package:recipes_web/pages/login_screen/login_screen.dart';
-import 'package:recipes_web/pages/signup_screen/dto/sign-up.dto.dart';
+import 'package:recipes_web/pages/register_screen/dto/sign-up.dto.dart';
 
 @immutable
-class SignupScreen extends StatelessWidget {
-  SignupScreen({super.key});
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
+  static String routeName = '/register';
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(final BuildContext context) {
@@ -46,7 +47,7 @@ class SignupScreen extends StatelessWidget {
   Widget _buildRegisterForm() {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    
+
     final Map<String, dynamic> controllers = <String, dynamic>{
       'username': usernameController,
       'password': passwordController,
@@ -89,39 +90,38 @@ class SignupScreen extends StatelessWidget {
     final Map<String, dynamic> controllers,
   ) =>
       ElevatedButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  /// Check if username already exists in DB
-                  final bool result =
+        onPressed: () async {
+          if (_formKey.currentState!.validate()) {
+            /// Check if username already exists in DB
+            final bool result =
                 await authAPI.checkUsername(controllers['username'].text);
 
-                  ///
+            ///
 
-                  if (result) {
-                    await Get.defaultDialog(
-                      content: const Text(
-                        'User account with that email address already exists',
-                      ),
-                    );
-                  } else {
-                    await authAPI.signUp(
-                      SignUpDto(
+            if (result) {
+              await Get.defaultDialog(
+                content: const Text(
+                  'User account with that email address already exists',
+                ),
+              );
+            } else {
+              await authAPI.signUp(
+                SignUpDto(
                   username: controllers['username'].text,
                   password: controllers['password'].text,
-                        platform: await Config().getPlatform(),
-                      ),
-                    );
-                  }
-                }
-              },
-              child: const Text('Register'),
+                  platform: await Config().getPlatform(),
+                ),
+              );
+            }
+          }
+        },
+        child: const Text('Register'),
       );
 
   Widget _buildCancelButton() => TextButton(
-              onPressed: () => Get.off(() => const LoginScreen()),
+        onPressed: () => Get.off(() => const LoginScreen()),
         child: const Text('Cancel'),
-    );
-
+      );
 }
 
 // TODO(Rob): Build signup/register screen
