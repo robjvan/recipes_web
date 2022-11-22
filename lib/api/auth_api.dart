@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:recipes_web/controllers/auth.controller.dart';
 import 'package:recipes_web/models/access_token.dart';
 import 'package:recipes_web/pages/dashboard_screen/dashboard_screen.dart';
 import 'package:recipes_web/pages/login_screen/dto/sign_in.dto.dart';
+import 'package:recipes_web/pages/login_screen/login_screen.dart';
 import 'package:recipes_web/pages/register_screen/dto/sign-up.dto.dart';
 import 'package:recipes_web/widgets/custom_dialogs.dart';
 
@@ -24,7 +26,6 @@ class AuthAPI {
 
     try {
       response = await _authAPIProvider.signIn(signInCredentials);
-
       switch (response.statusCode) {
         case 201:
           final AuthToken json = AuthToken.fromJson(jsonDecode(response.body));
@@ -34,12 +35,18 @@ class AuthAPI {
           _authController.saveToken(parsedToken);
 
           /// Navigate to Dashboard
+          _apiState.setLoadingState(false);
           await Get.off(DashboardScreen.new);
           break;
         case 400:
         case 401:
           await CustomDialogs().buildErrorDialog(
             'Invalid username or password, please try again',
+          );
+          break;
+        case 403:
+          await CustomDialogs().buildErrorDialog(
+            'Please confirm email address before signing in.',
           );
           break;
         case 404:
@@ -102,20 +109,65 @@ class AuthAPI {
   /// Sign up as a new user
   Future<dynamic> signUp(final SignUpDto signupCredentials) async {
     _apiState.setLoadingState(true);
-    // late http.Response response;
+    late http.Response response;
 
-    /// Check if username already exists in DB
-    bool userAlreadyExists = await checkUsername(signupCredentials.username);
+    try {
+      /// Check if username already exists in DB
+      bool userAlreadyExists = await checkUsername(signupCredentials.username);
 
-    if (userAlreadyExists) {
-      await Get.defaultDialog(
-        content: const Text(
-          'User account with that email address already exists',
-        ),
-      );
-    } else {
-      // TODO(Rob): Finish Signup method
+      if (userAlreadyExists) {
+        await Get.defaultDialog(
+          content: const Text(
+            'User account with that email address already exists, please sign in instead.',
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {},
+              child: const Text('Reset Password'),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text('Login'),
+            ),
+          ],
+        );
+      } else {
+        try {
+          response = await _authAPIProvider.signUp(signupCredentials);
 
+          switch (response.statusCode) {
+            case 200:
+            case 201:
+              // We will receive a User object if user creation was successful
+              await CustomDialogs().buildErrorDialog(
+                'New account created successfully, please check your inbox for a confirmation email before signing in!',
+              );
+              _apiState.setLoadingState(false);
+              unawaited(Get.offAll(() => const LoginScreen()));
+              break;
+            case 400:
+            case 401:
+            case 404:
+              await CustomDialogs().buildErrorDialog(
+                'Could not connect to server, please try again later',
+              );
+              break;
+            case 500:
+              await CustomDialogs()
+                  .buildErrorDialog('Server error, please try again later');
+              break;
+          }
+        } on Exception catch (err) {
+          debugPrint(err.toString());
+          await CustomDialogs()
+              .buildErrorDialog('Server error, please try again later');
+        }
+      }
+    } on Exception catch (err) {
+      debugPrint(err.toString());
+      await CustomDialogs()
+          .buildErrorDialog('Server error, please try again later');
     }
+    _apiState.setLoadingState(false);
   }
 }
