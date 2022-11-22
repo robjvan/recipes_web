@@ -1,3 +1,3 @@
-final Map<String, String> spanishStrings = {
+final Map<String, String> spanishStrings = <String, String>{
   'app-title': 'Recipes',
 };

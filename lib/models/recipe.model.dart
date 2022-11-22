@@ -3,7 +3,7 @@ class Recipe {
   String title;
   int userId;
 
-  //TODO: Add missing fields
+  // TODO(Rob): Add missing fields
 
   Recipe({
     required this.id,
@@ -17,7 +17,7 @@ class Recipe {
         userId: json['userId'],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'title': title,
         'userId': userId,
