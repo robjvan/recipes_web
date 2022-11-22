@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipes_web/api/auth_api.dart';
 import 'package:recipes_web/config/config.dart';
+import 'package:recipes_web/controllers/password_visibility.controller.dart';
 import 'package:recipes_web/pages/login_screen/login_screen.dart';
 import 'package:recipes_web/pages/register_screen/dto/sign-up.dto.dart';
 
@@ -28,6 +29,7 @@ class RegisterForm extends StatelessWidget {
         child: Column(
           children: <Widget>[
             _buildUsernameField(usernameController),
+            _buildPasswordField(passwordController),
             _buildRegisterButton(authAPI, controllers),
             const SizedBox(height: 16),
             _buildCancelButton(),
@@ -69,8 +71,37 @@ class RegisterForm extends StatelessWidget {
         child: const Text('Register'),
       );
 
-  Widget _buildCancelButton() => TextButton(
-        onPressed: () => Get.off(() => const LoginScreen()),
-        child: const Text('Cancel'),
-      );
+  Widget _buildCancelButton() {
+    return TextButton(
+      onPressed: () => Get.off(() => const LoginScreen()),
+      child: const Text('Cancel'),
+    );
+  }
+
+  Widget _buildPasswordField(final TextEditingController passwordController) {
+    final PasswordVisibiltyController passwordVisibilty = Get.put(
+      PasswordVisibiltyController(),
+    );
+
+    return Obx(
+      () => TextFormField(
+        controller: passwordController,
+        validator: (final String? value) {
+          if (value!.isEmpty) {
+            return 'Password cannot be empty';
+          }
+          return null;
+        },
+        obscureText: passwordVisibilty.obscurePassword,
+        decoration: InputDecoration(
+          suffix: IconButton(
+            onPressed: passwordVisibilty.toggleVisibility,
+            icon: passwordVisibilty.obscurePassword
+                ? const Icon(Icons.visibility_off)
+                : const Icon(Icons.visibility),
+          ),
+        ),
+      ),
+    );
+  }
 }
