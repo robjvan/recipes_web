@@ -94,7 +94,7 @@ linter:
     # Provide doc comments for all public APIs
     package_api_docs: true
     # Use => for short members whose body is a single return statement
-    prefer_expression_function_bodies: true
+    # prefer_expression_function_bodies: true
     # Prefer final in for-each loop variable if reference is not reassigned
     prefer_final_in_for_each: true
     # Prefer final for variable declarations if they are not reassigned
