@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipes_web/controllers/auth.controller.dart';
-import 'package:recipes_web/widgets/navigation_drawer/navigation.drawer.dart';
+import 'package:recipes_web/widgets/navigation_drawer.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipes_web/widgets/navigation_drawer/navigation.drawer.dart';
+import 'package:recipes_web/widgets/navigation_drawer.dart';
 
 class RecipesScreen extends StatelessWidget {
   static String routeName = '/recipes';

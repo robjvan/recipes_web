@@ -5,7 +5,6 @@ import 'package:recipes_web/pages/login_screen/login_screen.dart';
 import 'package:recipes_web/pages/recipes_screen/recipes_screen.dart';
 import 'package:recipes_web/pages/settings_screen/settings_screen.dart';
 import 'package:recipes_web/pages/shoppinglist_screen/shoppinglist_screen.dart';
-// import 'package:recipes_web/widgets/navigation_drawer/widgets/navigation.row.dart';
 
 class NavigationDrawer extends Drawer {
   const NavigationDrawer({super.key});
