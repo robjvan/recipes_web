@@ -36,6 +36,9 @@ class AuthAPIProvider {
 
     return http.post(
       signupUrl,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
       body: jsonEncode(
         <String, String>{
           'username': signupCredentials.username,
