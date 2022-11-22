@@ -18,12 +18,18 @@ class SignupScreen extends StatelessWidget {
     final ApiStateController apiState = Get.put(ApiStateController());
 
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          _buildHeaderWidget(context),
-          const SizedBox(height: 32),
-          _buildRegisterForm(),
-        ],
+      body: Container(
+        decoration: const BoxDecoration(color: Colors.white),
+        width: sw,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            _buildHeaderWidget(context),
+            const SizedBox(height: 32),
+            _buildRegisterForm(),
+          ],
+        ),
       ),
     );
   }
@@ -40,7 +46,12 @@ class SignupScreen extends StatelessWidget {
   Widget _buildRegisterForm() {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final TextEditingController nameController = TextEditingController();
+    
+    final Map<String, dynamic> controllers = <String, dynamic>{
+      'username': usernameController,
+      'password': passwordController,
+    };
+
     final AuthAPI authAPI = AuthAPI();
     final UsersAPI usersAPI = UsersAPI();
 
@@ -50,24 +61,39 @@ class SignupScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            TextFormField(
-              controller: usernameController,
-              validator: (final String? value) {
-                debugPrint('');
-                if (value!.isEmpty) {
-                  return 'Email address cannot be empty';
-                } else if (!value.isEmail) {
-                  return 'Email must be a valid email address';
-                }
-                return null;
-              },
-            ),
-            ElevatedButton(
+            _buildUsernameField(usernameController),
+            _buildRegisterButton(authAPI, controllers),
+            const SizedBox(height: 16),
+            _buildCancelButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUsernameField(final TextEditingController usernameController) =>
+      TextFormField(
+        controller: usernameController,
+        validator: (final String? value) {
+          if (value!.isEmpty) {
+            return 'Email address cannot be empty';
+          } else if (!value.isEmail) {
+            return 'Email must be a valid email address';
+          }
+          return null;
+        },
+      );
+
+  Widget _buildRegisterButton(
+    final AuthAPI authAPI,
+    final Map<String, dynamic> controllers,
+  ) =>
+      ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   /// Check if username already exists in DB
                   final bool result =
-                      await authAPI.checkUsername(usernameController.text);
+                await authAPI.checkUsername(controllers['username'].text);
 
                   ///
 
@@ -80,8 +106,8 @@ class SignupScreen extends StatelessWidget {
                   } else {
                     await authAPI.signUp(
                       SignUpDto(
-                        username: usernameController.text,
-                        password: passwordController.text,
+                  username: controllers['username'].text,
+                  password: controllers['password'].text,
                         platform: await Config().getPlatform(),
                       ),
                     );
@@ -89,17 +115,13 @@ class SignupScreen extends StatelessWidget {
                 }
               },
               child: const Text('Register'),
-            ),
-            const SizedBox(height: 16),
-            TextButton(
+      );
+
+  Widget _buildCancelButton() => TextButton(
               onPressed: () => Get.off(() => const LoginScreen()),
-              child: const Text('Cancel'),
-            ),
-          ],
-        ),
-      ),
+        child: const Text('Cancel'),
     );
-  }
+
 }
 
 // TODO: Build signup/register screen
