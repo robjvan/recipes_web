@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:recipes_web/controllers/auth.controller.dart';
 import 'package:recipes_web/widgets/navigation_drawer.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -11,7 +9,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Scaffold build(final BuildContext context) {
     final GetStorage box = GetStorage();
-    final String authToken = box.read('authToken');
+    // final String authToken = box.read('authToken');
 
     return Scaffold(
       appBar: AppBar(
