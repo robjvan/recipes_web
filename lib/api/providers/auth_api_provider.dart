@@ -6,7 +6,7 @@ import 'package:recipes_web/config/config.dart' as config;
 import 'package:recipes_web/pages/login_screen/dto/sign_in.dto.dart';
 import 'package:recipes_web/pages/register_screen/dto/sign-up.dto.dart';
 
-//* The purpose of an API Provider is to handle the direct communication with the DB.
+//* The purpose of an API Provider is to handle the direct communication with the backend.
 //* It passes requests and returns the raw response without any sort of processing
 
 @immutable
